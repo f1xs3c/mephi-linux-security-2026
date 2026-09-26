@@ -24,7 +24,9 @@ sudo groupadd students
 tail /etc/group
 ```
 
-![[Pasted image 20260924193219.png]]
+![Рисунок 1](images/Pasted%20image%2020260924193219.png)
+
+Рисунок 1 – группа `students` в файле `/etc/group`
 
 Создаем пользователя user1 с домашней директорией и заданным идентификатором.
 
@@ -32,7 +34,9 @@ tail /etc/group
 sudo useradd -m -u 1234 -g students user1
 ```
 
-![[Pasted image 20260924194855.png]]
+![Рисунок 2](images/Pasted%20image%2020260924194855.png)
+
+Рисунок 2 – создание пользователя `user1` с UID 1234
 
 Меняем пароль пользователю.
 
@@ -40,7 +44,9 @@ sudo useradd -m -u 1234 -g students user1
 sudo passwd user1
 ```
 
-![[Pasted image 20260924194944.png]]
+![Рисунок 3](images/Pasted%20image%2020260924194944.png)
+
+Рисунок 3 – установка пароля для пользователя `user1`
 
 Настроим необходимость изменения пароля пользователя user1 каждые три месяца.
 
@@ -56,7 +62,9 @@ sudo chage -M 90 user1
 sudo chage -l user1
 ```
 
-![[Pasted image 20260926162649.png]]
+![Рисунок 4](images/Pasted%20image%2020260926162649.png)
+
+Рисунок 4 – срок действия пароля пользователя `user1` – 90 дней
 
 ***
 
@@ -76,7 +84,9 @@ find / -type f -perm -4000 2>/dev/null
 `-type f` — только обычные файл
 `-perm -4000` — файлы с установленным SUID-битом
 
-![[Pasted image 20260925144008.png]]
+![Рисунок 5](images/Pasted%20image%2020260925144008.png)
+
+Рисунок 5 – поиск файлов с установленным битом set-UID
 
 ```
 /usr/lib/polkit-1/polkit-agent-helper-1
@@ -105,7 +115,7 @@ find / -type f -perm -4000 2>/dev/null
 
 #### Реализация
 
-```
+```bash
 ps -eo pid,ruid,euid,user,comm,args | awk '$3 == 0 && $2 >= 1000'
 ```
 
@@ -122,11 +132,15 @@ ps -eo pid,ruid,euid,user,comm,args | awk '$3 == 0 && $2 >= 1000'
 
 Таких процессов нет
 
-![[Pasted image 20260925150108.png]]
+![Рисунок 6](images/Pasted%20image%2020260925150108.png)
+
+Рисунок 6 – отсутствие процессов с EUID 0 и RUID обычного пользователя
 
 попробую с `passwd`.
 
-![[Pasted image 20260925150151.png]]
+![Рисунок 7](images/Pasted%20image%2020260925150151.png)
+
+Рисунок 7 – процесс `passwd` с RUID 1000 и EUID 0
 
 получилось.
 
@@ -151,7 +165,9 @@ ps -eo pid,ruid,euid,user,comm,args | awk '$3 == 0 && $2 >= 1000'
 
 Решил взять утилиту `cat`.
 
-![[Pasted image 20260925161512.png]]
+![Рисунок 8](images/Pasted%20image%2020260925161512.png)
+
+Рисунок 8 – ошибка чтения `/etc/shadow` обычной утилитой `cat`
 
 ### 3.2. Выполнение привилегированной операции с помощью механизма set-UID
 #### Задание
@@ -169,7 +185,9 @@ ps -eo pid,ruid,euid,user,comm,args | awk '$3 == 0 && $2 >= 1000'
 sudo cp /usr/bin/cat /home/user1/cat-suid
 ```
 
-![[Pasted image 20260925162351.png]]
+![Рисунок 9](images/Pasted%20image%2020260925162351.png)
+
+Рисунок 9 – копирование `cat` в домашний каталог пользователя `user1`
 
 Устанавливаем set-UID
 
@@ -185,11 +203,15 @@ sudo ls -l /home/user1/cat-suid
 sudo stat /home/user1/cat-suid
 ```
 
-![[Pasted image 20260925163301.png]]
+![Рисунок 10](images/Pasted%20image%2020260925163301.png)
+
+Рисунок 10 – установка бита set-UID для файла `cat-suid`
 
 Теперь за user1 попробуем прочитать `/etc/shadow` через два разных cat
 
-![[Pasted image 20260925163712.png]]
+![Рисунок 11](images/Pasted%20image%2020260925163712.png)
+
+Рисунок 11 – сравнение обычной и set-UID-копии утилиты `cat`
 
 через `/usr/bin/cat` не получается прочитать /etc/shadow
 через `cat-suid` получается прочитать /etc/shadow
@@ -215,11 +237,15 @@ sudo stat /home/user1/cat-suid
 
 Берем утилиту `chown`
 
-![[Pasted image 20260925172523.png]]
+![Рисунок 12](images/Pasted%20image%2020260925172523.png)
+
+Рисунок 12 – выбор утилиты `chown`
 
 Обычный пользователь user1 не может поменять владельца у файла, например, на пользователя root
 
-![[Pasted image 20260925172108.png]]
+![Рисунок 13](images/Pasted%20image%2020260925172108.png)
+
+Рисунок 13 – ошибка смены владельца файла обычной утилитой `chown`
 
 ### 4.2. Выполнение привилегированной операции с помощью механизма привилегий
 
@@ -239,11 +265,13 @@ sudo cp /usr/bin/chown /home/user1/chown-cap
 ```
 
 
-![[Pasted image 20260925200600.png]]
+![Рисунок 14](images/Pasted%20image%2020260925200600.png)
 
+Рисунок 14 – копирование `chown` в домашний каталог пользователя `user1`
 
-![[Pasted image 20260925200822.png]]
+![Рисунок 15](images/Pasted%20image%2020260925200822.png)
 
+Рисунок 15 – проверка файла `chown-cap` перед назначением привилегии
 
 Мы назначаем `/home/user1/chown-cap` capability `CAP_CHOWN`. При запуске `/home/user1/chown-cap` процесс получает право менять владельца файлов, не получая при этом все полномочия `root`.
 
@@ -257,11 +285,15 @@ sudo setcap cap_chown=ep /home/user1/chown-cap
 - `p` — permitted, то есть разрешённая для процесса;
 - `e` — effective, то есть активная при выполнении.
 
-![[Pasted image 20260925202116.png]]
+![Рисунок 16](images/Pasted%20image%2020260925202116.png)
+
+Рисунок 16 – назначение привилегии `CAP_CHOWN` файлу `chown-cap`
 
 И теперь за пользователь `user1` можно через утилиту `/home/user1/chown-cap` менять владельцев файлов. Например, на file.txt.
 
-![[Pasted image 20260925202450.png]]
+![Рисунок 17](images/Pasted%20image%2020260925202450.png)
+
+Рисунок 17 – смена владельца файла с помощью `chown-cap`
 
 ***
 ## Раздел 5. Изучение механизма sudo
@@ -272,12 +304,15 @@ sudo setcap cap_chown=ep /home/user1/chown-cap
 
 #### Реализация
 
-![[Pasted image 20260925202841.png]]
+![Рисунок 18](images/Pasted%20image%2020260925202841.png)
 
+Рисунок 18 – расположение и права доступа утилиты `date`
 
 Обычный `user1` не имеет права менять системное время.
 
-![[Pasted image 20260925203822.png]]
+![Рисунок 19](images/Pasted%20image%2020260925203822.png)
+
+Рисунок 19 – неудачные попытки изменить время без правила sudo
 
 Мы добавляем правило для `sudo`: `user1 ALL=(root) /usr/bin/date`
 
@@ -287,11 +322,15 @@ sudo visudo -f /etc/sudoers.d/user1-date
 
 Добавляем в файл правило и сохраняем файл.
 
-![[Pasted image 20260925204540.png]]
+![Рисунок 20](images/Pasted%20image%2020260925204540.png)
+
+Рисунок 20 – правило sudo для запуска `/usr/bin/date` пользователем `user1`
 
 После этого `user1` не становится администратором и не получает полный доступ `sudo`. Он получает право только на одну конкретную команду - `/usr/bin/date`.
 
-![[Pasted image 20260925204824.png]]
+![Рисунок 21](images/Pasted%20image%2020260925204824.png)
+
+Рисунок 21 – изменение системного времени с помощью sudo
 
 ***
 
@@ -310,8 +349,9 @@ sudo visudo -f /etc/sudoers.d/user1-date
 
 **Бухгалтерский шифр обучающегося:** 354381
 
-![[mephi-screenshot.png]]
+![Рисунок 22](mephi-screenshot.png)
 
+Рисунок 22 – уникальный номер 354381 в терминале
 
 ### 6.2. Создание артефактов ДЗ
 
@@ -341,7 +381,9 @@ getcap <путь к утилите> > ~/getcap.out
 history > ~/history.out 
 ```
 
-![[Pasted image 20260925205324.png]]
+![Рисунок 23](images/Pasted%20image%2020260925205324.png)
+
+Рисунок 23 – сохранение и проверка истории команд
 
 ***
 
@@ -353,9 +395,11 @@ stat /home/user1/cat-suid >> ~/stat.out
 stat /home/user1/chown-cap >> ~/stat.out
 ```
 
-![[Pasted image 20260926154607.png]]
+![Рисунок 24](images/Pasted%20image%2020260926154607.png)
 
-[[stat.out]]
+Рисунок 24 – сохранение результатов `stat` в файле `stat.out`
+
+[stat.out](stat.out)
 
 ##### Вывод команды getcap
 
@@ -363,9 +407,11 @@ stat /home/user1/chown-cap >> ~/stat.out
 getcap /home/user1/chown-cap > ~/getcap.out
 ```
 
-![[Pasted image 20260926154727.png]]
+![Рисунок 25](images/Pasted%20image%2020260926154727.png)
 
-[[getcap.out]]
+Рисунок 25 – сохранение привилегии файла `chown-cap` в `getcap.out`
+
+[getcap.out](getcap.out)
 
 ***
 ##### set-UID файлы
@@ -374,9 +420,11 @@ getcap /home/user1/chown-cap > ~/getcap.out
 sudo find / -type f -perm -4000 2>/dev/null > ~/suid-files.out
 ```
 
-![[Pasted image 20260926155229.png]]
+![Рисунок 26](images/Pasted%20image%2020260926155229.png)
 
-[[suid-files.out]]
+Рисунок 26 – сохранение списка set-UID-файлов в `suid-files.out`
+
+[suid-files.out](suid-files.out)
 
 ***
 ##### Мониторинг процессов
@@ -385,9 +433,11 @@ sudo find / -type f -perm -4000 2>/dev/null > ~/suid-files.out
 ps -eo pid,ruid,euid,user,comm,args | awk '$3 == 0 && $2 >= 1000' > ~/privileged-processes.out
 ```
 
-![[Pasted image 20260926155655.png]]
+![Рисунок 27](images/Pasted%20image%2020260926155655.png)
 
-[[privileged-processes.out]]
+Рисунок 27 – сохранение сведений о процессе `passwd` в `privileged-processes.out`
+
+[privileged-processes.out](privileged-processes.out)
 
 ***
 
@@ -399,11 +449,13 @@ ps -eo pid,ruid,euid,user,comm,args | awk '$3 == 0 && $2 >= 1000' > ~/privileged
 
 Создайте публичный репозиторий на GitHub с названием: “mephi-linux-security-2026”.
 
-https://github.com/f1xs3c/mephi-linux-security-2026
+[Репозиторий на GitHub](https://github.com/f1xs3c/mephi-linux-security-2026)
 
 #### Реализация
 
-![[Pasted image 20260926160513.png]]
+![Рисунок 28](images/Pasted%20image%2020260926160513.png)
+
+Рисунок 28 – пустой публичный репозиторий `mephi-linux-security-2026`
 
 ### 7.2. Загрузка файлов в репозиторий GitHub
 
@@ -443,10 +495,13 @@ git remote add origin git@github.com:f1xs3c/mephi-linux-security-2026.git
 git push -u origin main 
 ```
 
-![[Pasted image 20260926161509.png]]
+![Рисунок 29](images/Pasted%20image%2020260926161509.png)
 
-![[Pasted image 20260926161601.png]]
+Рисунок 29 – публикация локального репозитория на GitHub
 
+![Рисунок 30](images/Pasted%20image%2020260926161601.png)
+
+Рисунок 30 – файлы проекта в репозитории GitHub
 
 Теперь надо загрузить следующие файлы:
 
@@ -461,11 +516,11 @@ git push -u origin main
 
 | Расположение              | Файл           |
 | ------------------------- | -------------- |
-| /etc/passwd               | [[passwd]]     |
-| /etc/shadow               | [[shadow]]     |
-| /etc/group                | [[group]]      |
-| /etc/sudoers              | [[sudoers]]    |
-| /etc/sudoers.d/user1-date | [[user1-date]] |
+| /etc/passwd               | [passwd](passwd)         |
+| /etc/shadow               | [shadow](shadow)         |
+| /etc/group                | [group](group)           |
+| /etc/sudoers              | [sudoers](sudoers)       |
+| /etc/sudoers.d/user1-date | [user1-date](user1-date) |
 
 ### 7.3. Проверка доступности
 
@@ -481,4 +536,6 @@ https://github.com/ВАШ_ЛОГИН/mephi-linux-security-2026
 
 #### Реализация
 
-![[Pasted image 20260926161818.png]]
+![Рисунок 31](images/Pasted%20image%2020260926161818.png)
+
+Рисунок 31 – проверка доступности README с помощью `curl`
