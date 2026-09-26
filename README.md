@@ -432,8 +432,14 @@ git push -u origin main
 ```
 #### Реализация
 
+```bash
+git remote add origin git@github.com:f1xs3c/mephi-linux-security-2026.git
+git push -u origin main 
+```
 
+![[Pasted image 20260926161509.png]]
 
+![[Pasted image 20260926161601.png]]
 ### 7.3. Проверка доступности
 
 #### Задание
@@ -447,3 +453,5 @@ https://github.com/ВАШ_ЛОГИН/mephi-linux-security-2026
 Ссылку на репозиторий необходимо отправить в форму сдачи проекта.
 
 #### Реализация
+
+![[Pasted image 20260926161818.png]]
