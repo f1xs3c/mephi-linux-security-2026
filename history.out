@@ -1,0 +1,92 @@
+    1  clear
+    2  pwd
+    3  ls -la
+    4  clear
+    5  sudo groupadd students
+    6  cat /etc/group
+    7  tail /etc/group
+    8  clear
+    9  sudo useradd -m -u 1234 -g students user1
+   10  ls -la /home/
+   11  tail /etc/passwd
+   12  sudo passwd user1
+   13  clear
+   14  sudo passwd user1
+   15  sudo chage -M 90 user1
+   16  clear
+   17  history > ~/history1.1.out 
+   18  history
+   19  exit
+   20  history
+   21  clear
+   22  find / -type f -perm -4000 2>/dev/null
+   23  ps
+   24  ps -eo pid,ruid,euid,user,comm,args
+   25  clear
+   26  cat /etc/login.defs
+   27  grep -E '^(UID_MIN|UID_MAX)' /etc/login.defs
+   28  ps -eo pid,ruid,euid,user,comm,args | awk '$3 == 0 && $2 >= 1000'
+   29  ps -eo pid,ruid,euid,user,comm,args
+   30  ps -eo pid,ruid,euid,user,comm,args | awk '$3 == 0 && $2 >= 1000'
+   31  clear
+   32  ps -eo pid,ruid,euid,user,comm,args | awk '$3 == 0 && $2 >= 1000'
+   33  passwd
+   34  clear
+   35  su - user1
+   36  clear
+   37  su - user1
+   38  sudo cp /usr/bin/cat /home/user1/cat-suid
+   39  ls -l /home/user1/cat-suid
+   40  sudo ls -l /home/user1/cat-suid
+   41  stat /home/user1/cat-suid
+   42  clear
+   43  sudo chmod 4755 /home/user1/cat-suid
+   44  sudo ls -l /home/user1/cat-suid
+   45  sudo stat /home/user1/cat-suid
+   46  clear
+   47  su - user1
+   48  /usr/bin/1234
+   49  clear
+   50  su - user1
+   51  ls
+   52  clear
+   53  sudo chown /usr/bin/chown /home/user1/chown-cap
+   54  which chown
+   55  sudo cp /usr/bin/chown /home/user1/chown-cap
+   56  sudo ls /home/user1
+   57  sudo ls -la /home/user1
+   58  clear
+   59  sudo ls -la /home/user1
+   60  getcap /home/user1/chown-cap
+   61  sudo getcap /home/user1/chown-cap
+   62  clear
+   63  ls
+   64  clear
+   65  sudo ls -la /home/user1
+   66  sudo getcap /home/user1/chown-cap
+   67  sudo setcap cap_chown=ep /home/user1/chown-cap
+   68  sudo getcap /home/user1/chown-cap
+   69  clear
+   70  which date
+   71  ls -la /usr/bin/date
+   72  stat /usr/bin/date
+   73  ls -l
+   74  clear
+   75  ls -l 
+   76  ls -l /etc/sudoers
+   77  ls -l /etc/sudoers/
+   78  ls -l /etc/sudoers.d
+   79  sudo ls -l /etc/sudoers.d
+   80  clear
+   81  sudo visudo -f /etc/sudoers.d/user1-date
+   82  sudo ls -la /etc/sudoers.d/
+   83  rm /etc/sudoers.d/user1-date
+   84  sudo rm /etc/sudoers.d/user1-date
+   85  clear
+   86  ls
+   87  clear
+   88  sudo visudo -f /etc/sudoers.d/user1-date
+   89  sudo cat /etc/sudoers.d/user1-date
+   90  clear
+   91  ls
+   92  history > ~/history.out

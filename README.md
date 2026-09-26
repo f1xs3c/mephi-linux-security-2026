@@ -1,4 +1,4 @@
-## Раздел 1. Создание пользователя
+[[suid-files.out]][[suid-files.out]]## Раздел 1. Создание пользователя
 
 ### 1.1. Создание пользователя
 
@@ -286,3 +286,101 @@ sudo visudo -f /etc/sudoers.d/user1-date
 После этого `user1` не становится администратором и не получает полный доступ `sudo`. Он получает право только на одну конкретную команду - `/usr/bin/date`.
 
 ![[Pasted image 20260925204824.png]]
+
+***
+
+## Раздел 6. Сбор артефактов
+
+### 6.1. Создание скриншота
+
+#### Задание
+
+Напишите в открытом терминале ваш уникальный номер.
+
+Сделайте скриншот экрана.
+
+Сохраните скриншот как mephi-screenshot.png.
+#### Реализация
+
+**Бухгалтерский шифр обучающегося:** 354381
+
+![[mephi-screenshot.png]]
+
+
+### 6.2. Создание артефактов ДЗ
+
+#### Задание
+
+Сохраните историю выполненных команд в файл:
+
+```
+history > ~/history.out 
+```
+
+Сохраните вывод следующих команд в файлы:
+
+```
+stat /home/user1 > ~/stat.out
+stat <путь к утилите> >> ~/stat.out # для каждой утилиты из раздела 3 и 4
+getcap <путь к утилите> > ~/getcap.out 
+```
+
+Также сохраните вывод команд мониторинга процессов и файлов
+
+#### Реализация
+
+##### История выполненных команд
+
+```
+history > ~/history.out 
+```
+
+![[Pasted image 20260925205324.png]]
+
+***
+
+##### Вывод команд stat
+
+```bash
+stat /home/user1 > ~/stat.out
+stat /home/user1/cat-suid >> ~/stat.out
+stat /home/user1/chown-cap >> ~/stat.out
+```
+
+![[Pasted image 20260926154607.png]]
+
+[[stat.out]]
+
+##### Вывод команды getcap
+
+```bash
+getcap /home/user1/chown-cap > ~/getcap.out
+```
+
+![[Pasted image 20260926154727.png]]
+
+[[getcap.out]]
+
+***
+##### set-UID файлы
+
+```bash
+sudo find / -type f -perm -4000 2>/dev/null > ~/suid-files.out
+```
+
+![[Pasted image 20260926155229.png]]
+
+[[suid-files.out]]
+
+***
+##### Мониторинг процессов
+
+```bash
+ps -eo pid,ruid,euid,user,comm,args | awk '$3 == 0 && $2 >= 1000' > ~/privileged-processes.out
+```
+
+![[Pasted image 20260926155655.png]]
+
+[[privileged-processes.out]]
+
+***

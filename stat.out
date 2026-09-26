@@ -1,0 +1,27 @@
+  File: /home/user1
+  Size: 148       	Blocks: 0          IO Block: 4096   directory
+Device: 252,2	Inode: 75497600    Links: 2
+Access: (0700/drwx------)  Uid: ( 1234/   user1)   Gid: ( 1001/students)
+Context: unconfined_u:object_r:user_home_dir_t:s0
+Access: 2026-09-25 20:42:09.871146993 +0000
+Modify: 2026-09-25 20:41:25.287113790 +0000
+Change: 2026-09-25 20:41:25.287113790 +0000
+ Birth: 2026-09-24 16:36:45.531508258 +0000
+  File: /home/user1/cat-suid
+  Size: 37336     	Blocks: 80         IO Block: 4096   regular file
+Device: 252,2	Inode: 75497605    Links: 1
+Access: (4755/-rwsr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Context: unconfined_u:object_r:user_home_t:s0
+Access: 2026-09-25 13:36:26.832383698 +0000
+Modify: 2026-09-25 13:19:25.721676064 +0000
+Change: 2026-09-25 13:30:03.082369365 +0000
+ Birth: 2026-09-25 13:19:25.721676064 +0000
+  File: /home/user1/chown-cap
+  Size: 66616     	Blocks: 136        IO Block: 4096   regular file
+Device: 252,2	Inode: 75497607    Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Context: unconfined_u:object_r:user_home_t:s0
+Access: 2026-09-25 17:24:09.897068770 +0000
+Modify: 2026-09-25 17:05:03.196084164 +0000
+Change: 2026-09-25 17:20:12.123449107 +0000
+ Birth: 2026-09-25 17:05:03.196084164 +0000
